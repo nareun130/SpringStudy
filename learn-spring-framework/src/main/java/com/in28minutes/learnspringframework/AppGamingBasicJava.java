@@ -1,11 +1,14 @@
 package com.in28minutes.learnspringframework;
 
-public class AppGamingBasicJava {
-    public static void main(String[] args) {
+import com.in28minutes.learnspringframework.game.GameRunnder;
+import com.in28minutes.learnspringframework.game.MarioGame;
+import com.in28minutes.learnspringframework.game.SuperContraGame;
 
-        // var marioGame = new MarioGame();
-        var superContraGame = new SuperContraGame();
-        var gameRunnder = new GameRunnder(superContraGame );
+public class AppGamingBasicJava {
+    public static void main(String[] args) { 
+        var game = new MarioGame();
+        // var game = new SuperContraGame();
+        var gameRunnder = new GameRunnder(game);
         gameRunnder.run();
     }
 
