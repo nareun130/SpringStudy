@@ -1,11 +1,13 @@
 package com.in28minutes.learnspringframework.game;
 
+import com.in28minutes.learnspringframework.GamingConsole;
+
 public class GameRunnder {
     // MarioGame game;
-    SuperContraGame game;
+    GamingConsole game;
 
     // public GameRunnder(MarioGame game) {
-    public GameRunnder(SuperContraGame game){
+    public GameRunnder(GamingConsole game) {
         this.game = game;
     }
 
@@ -16,7 +18,5 @@ public class GameRunnder {
         game.left();
         game.right();
     }
-    
-    
-     
+
 }
