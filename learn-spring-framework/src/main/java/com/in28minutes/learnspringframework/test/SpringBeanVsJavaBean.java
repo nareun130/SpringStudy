@@ -3,7 +3,7 @@ package com.in28minutes.learnspringframework.test;
 import java.io.Serializable;
 
 class Pojo {
-    //? POJO :일반적인 오래된 Java 객체
+    //? POJO :일반적인 오래된 Java 객체 -> 모든 SpringBean과 classs는 POJO 기반
     private String text;
 
     private int number;
