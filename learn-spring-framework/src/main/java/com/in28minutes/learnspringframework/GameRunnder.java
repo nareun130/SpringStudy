@@ -1,9 +1,11 @@
 package com.in28minutes.learnspringframework;
 
 public class GameRunnder {
-    MarioGame game;
+    // MarioGame game;
+    SuperContraGame game;
 
-    public GameRunnder(MarioGame game) {
+    // public GameRunnder(MarioGame game) {
+    public GameRunnder(SuperContraGame game){
         this.game = game;
     }
 
