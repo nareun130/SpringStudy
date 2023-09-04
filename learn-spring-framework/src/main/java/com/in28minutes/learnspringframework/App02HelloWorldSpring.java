@@ -6,7 +6,7 @@ public class App02HelloWorldSpring {
     public static void main(String[] args) {
         // * 1. 스프링 컨텍스트 실행 단게 - 설정 클래스를 사용하여 Spring 컨텍스트 시작 가능*/
         var context = new AnnotationConfigApplicationContext(HelloWorldConfiguration.class);
-        // * 2. 스프링이 관리해야하는 것을 설정 - @Configuration */
+        // * 2. 스프링이 관리해야하는 것을 설정 - @Configuration */ 
         // HelloWorldConfiguration - @Configuration
         // name - @Bean
 
@@ -14,7 +14,12 @@ public class App02HelloWorldSpring {
         System.out.println(context.getBean("name"));
         System.out.println(context.getBean("age")); 
         System.out.println(context.getBean("person"));
-        System.out.println(context.getBean("address"));
+        System.out.println(context.getBean("person2MethodCall"));
+        System.out.println(context.getBean("person3Parameters"));
+        // System.out.println(context.getBean("address"));// bean의 name을 변경 하였으므로 오류
+        System.out.println(context.getBean("address2"));
+        //? class 이름으로도 찾을 수 있다.
+        System.out.println(context.getBean(Address.class));
     }
 }
  
