@@ -1,10 +1,12 @@
 package com.in28minutes.learnspringframework.game;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GameRunnder {
-    // MarioGame game;
+
     GamingConsole game;
 
-    // public GameRunnder(MarioGame game) {
     public GameRunnder(GamingConsole game) {
         this.game = game;
     }
