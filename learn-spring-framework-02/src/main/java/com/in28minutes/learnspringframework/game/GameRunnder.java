@@ -1,5 +1,6 @@
 package com.in28minutes.learnspringframework.game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -7,7 +8,10 @@ public class GameRunnder {
 
     GamingConsole game;
 
-    public GameRunnder(GamingConsole game) {
+    //~> @Qualifier로 특정 bean을 주입.
+    // public GameRunnder(@Qualifier("SuperContraGameQualifier") GamingConsole game) {
+    public GameRunnder(@Qualifier("superContraGame") GamingConsole game) {
+        //? bean 클래스에 @Qualifier가 없다면 bean 이름으로 사용가능
         this.game = game;
     }
 
