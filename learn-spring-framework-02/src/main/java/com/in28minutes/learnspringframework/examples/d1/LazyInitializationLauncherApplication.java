@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 //!Spring bean의 초기화는 기본적으로 : Eager(즉시 초기화) -> Eager를 추천!!
 //! Spring 구성에 오류가 있을 경우 즉시 초기화를 사용하면 애플리케이션이 시작할 대 오류를 바로 확인 가능 
 @Component
-class ClassA {
+class ClassA { 
     //  public ClassA(){
     //     System.out.println("ClassA Bean initalized");
     //  }
@@ -19,7 +19,8 @@ class ClassA {
 
 @Component
 @Lazy //~> 이제 ClassB Bean 을 사용할 때 초기화가 됨. 권장X, 자주 사용 X
-//! 지연 초기화를 사용하는 경우 애플리케이션 시작 때 Spring 구성 오류 발생 X
+//! 지연 초기화를 사용하는 경우 애플리케이션 시작 때 Spring 구성 오류 발생 X 
+//! 지연초기화 시 오류는 런타임 예외가 되어서
 class ClassB {
   
     private ClassA classA;
