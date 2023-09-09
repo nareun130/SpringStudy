@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!--
+    bean definitions here --> 
+    <bean id="name" class="java.lang.String">
+        <constructor-arg value="Nareun" />
+    </bean>
+    <bean id="age" class="java.lang.Integer">
+        <constructor-arg value="25" />
+    </bean>
+<!-- ! 이렇게 컴포넌트 스캔도 정의 가능 -->
+    <!-- <context:component-scan base-package="com.in28minutes.learnspringframework.game" /> -->
+
+    <!--~> 컴포넌트 스캔을 대체할 방법 -> bean을 따로 정의 -->
+    <bean id="game" class="com.in28minutes.learnspringframework.game.PackManGame"/>
+    <bean id="gameRunner" class="com.in28minutes.learnspringframework.game.GameRunner">
+        <!--* 생성자 인수 정의 ~> class 참조라서 ref를 적음 -->
+        <constructor-arg ref="game"/>
+    </bean>
+
+</beans>
