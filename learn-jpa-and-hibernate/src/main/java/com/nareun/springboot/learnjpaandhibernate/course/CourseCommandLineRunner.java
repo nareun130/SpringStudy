@@ -18,6 +18,7 @@ public class CourseCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        //! EntityManger가 insert하기 전에 selectById로 실행해서 존재하는 지 체크 한 후 삽입하고 삭제한다.
         repository.insert(new Course(1, "Learn AWS JPA!", "nareun"));
         repository.insert(new Course(2, "Learn Azure JPA!", "nareun"));
         repository.insert(new Course(3, "Learn DevOps JPA!", "nareun"));
