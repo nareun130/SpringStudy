@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 //currency-service.url=
 //currency-service.username=
 //currency-service.key=
-//! profiles와 ConfigurationProperties를 조합해서 쓴다.
+//! profiles와 ConfigurationProperties를 조합해서 쓴다.~> 앱에 필요한 모든 설정을 외부화 가능
 
 @ConfigurationProperties(prefix = "currency-service")
 @Component
