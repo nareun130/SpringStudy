@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.nareun.springboot.learnjpaandhibernate.course.Course;
+
 @Repository
 public class CourseJdbcRepository {
 
@@ -39,7 +41,7 @@ public class CourseJdbcRepository {
         // !특정 상황에서 테이블에 있는 열의 이름은 Bean에 있는 이름과 정확히 짝을 이룬다!!!
         return springJdbcTemplate.queryForObject(SELECT_QUERY, new BeanPropertyRowMapper<>(Course.class), id);
         // * */ 2번째 파라미터 ResultSet을 Bean에 매핑 => Row Mapper : 결과 세트의 각 행을 특정 Bean에 연결
-        // 3 번째 파라미터 : id
+        // 3 번째 파라미터 : id 
         //~> Course클래스에 setter가 없으면 null값이 나온다.
 
     }
