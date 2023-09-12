@@ -3,8 +3,9 @@
     <title>Login Page</title>
   </head>
   <body>
-    <div>Welcome to nareun</div>
+    <div>Welcome ${name}  </div>
+    <hr>
     <div>Your Name : ${name}</div>
-    <div><a href="list-todos">Manage</a> Your todos</div>
+    <div><a href="list-todos">Manage</a> your todos</div>
   </body>
 </html>

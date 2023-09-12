@@ -39,6 +39,16 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- jstl-api -->
+		<dependency>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+		</dependency>
+		<!-- jstl-구현체 -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>glassfish-jstl</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
