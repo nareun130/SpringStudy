@@ -1,10 +1,14 @@
 package com.nareun.springboot.mywebapp.todo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class TodoService {
-    private static List<Todo> todos;
+    private static List<Todo> todos = new ArrayList<>();
 
     // ! 정적 변수를 초기화 하기 위해 static 블럭이 필요 -> 딱 한 번 수행
     static {
