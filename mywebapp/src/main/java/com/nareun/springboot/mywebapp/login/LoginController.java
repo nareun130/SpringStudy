@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("name")//* model에 들어간 name 값을 사용하기 위해 SessionAttributes에 name을 설정 ~> 이 값을 사용하는 모든 컨트롤러에 붙여야한다. */
+@SessionAttributes("name") // * model에 들어간 name 값을 사용하기 위해 SessionAttributes에 name을 설정 ~> 이 값을 사용하는 모든
+                           // 컨트롤러에 붙여야한다. */
 public class LoginController {
 
     private AuthenticationService authenticationService;
