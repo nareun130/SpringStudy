@@ -9,5 +9,6 @@ public class MywebappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MywebappApplication.class, args);
 	}
-
+//	storage.type.annotation.java
+//	entity.name.type.class
 }
