@@ -58,7 +58,7 @@ public class TodoController {
         // ~> 커맨드 빈 (Todo또는 Todo Bean을 보조객체 or 커맨드 빈으로 사용)
 
         String username = (String) model.get("name");
-        todoService.addTodo(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
+        todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
 
         // ? 여기서 Model을 받아서 todo에 추가하고 listTodos를 호출하면 아무런 model이 없는 채로 view만 호출
         // * */-> 리디렉션 사용
@@ -88,7 +88,7 @@ public class TodoController {
 
         String username = (String) model.get("name");
         todo.setUsername(username);
-        todoService.updateTodo(todo); 
+        todoService.updateTodo(todo);
 
         return "redirect:list-todos";
     }
