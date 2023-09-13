@@ -45,9 +45,9 @@ public class TodoController {
         return "todo";
     }
 
-    @RequestMapping(value = "add-todo", method = RequestMethod.POST) 
+    @RequestMapping(value = "add-todo", method = RequestMethod.POST)
     public String addNewTodo(ModelMap model, @Valid Todo todo, BindingResult result) {// ! jsp에서도 양식 보조객체를 설정해 줘야 한다.
-        //* */ 윻성 검사를 위해 @Valid를 추가, 유효성 검사에 걸릴 때 BindingResult에 error를 담아줌.
+        // * */ 윻성 검사를 위해 @Valid를 추가, 유효성 검사에 걸릴 때 BindingResult에 error를 담아줌.
         if (result.hasErrors()) {
             return "todo";
         }
@@ -64,5 +64,14 @@ public class TodoController {
         // * */-> 리디렉션 사용
         return "redirect:list-todos";
         // return "listTodos";
+    }
+
+    @RequestMapping("delete-todo")
+    public String deleteTodo(@RequestParam int id) {
+        // Dete todo
+        
+        todoService.deleteById(id);
+        return "redirect:list-todos";
+
     }
 }
