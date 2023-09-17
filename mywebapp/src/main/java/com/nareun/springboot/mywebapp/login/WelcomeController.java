@@ -16,9 +16,9 @@ public class WelcomeController {
     // GET, POST -> GET
     @RequestMapping(value = "/", method = RequestMethod.GET) // ~> GET 메서드만 처리
     public String gotoWelcomePage(ModelMap model) {
-        //! 만일 사용자가 메인에서 todolist를 들어가는 것이 아닌 list-todos라는 url을 입력하여 로그인 하면
-        //! 여기 로직을 타지 않으므로 list가 나오지 않는다. ~> @SessionAttributes("name") 때문에
-        //! => 항상 SpringSecurity로부터 직접 값을 받는 게 좋다!!
+        // ! 만일 사용자가 메인에서 todolist를 들어가는 것이 아닌 list-todos라는 url을 입력하여 로그인 하면
+        // ! 여기 로직을 타지 않으므로 list가 나오지 않는다. ~> @SessionAttributes("name") 때문에
+        // ! => 항상 SpringSecurity로부터 직접 값을 받는 게 좋다!!
         model.put("name", getLoggedinUsername());
         return "welcome";
     }

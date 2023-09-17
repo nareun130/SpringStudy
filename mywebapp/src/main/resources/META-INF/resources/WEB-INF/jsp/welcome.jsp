@@ -1,4 +1,4 @@
-<%@ include file="common/heade  r.jspf" %> <%@ include file="common/navigation.jspf" %>
+<%@ include file="common/header.jspf" %> <%@ include file="common/navigation.jspf" %>
 
 <div class="container">
   <h1>Welcome ${name}</h1>

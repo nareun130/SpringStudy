@@ -20,17 +20,26 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public InMemoryUserDetailsManager createUserDetailsManager() {
+
+        UserDetails userDetails1 = createNewUser("nareun", "1234");
+        UserDetails userDetails2 = createNewUser("gogo", "1029");
+
+        // ~> 이렇게 원하는 만큼 사용자 추가 가능
+        return new InMemoryUserDetailsManager(userDetails1, userDetails2);
+    }
+
+    private UserDetails createNewUser(String username, String password) {
+
         // * String을 받아서 String을 리턴 */
-        //! 어떤 input이 와도 인코딩한다음 사용자 세부정보를 설정할거다.
+        // ! 어떤 input이 와도 인코딩한다음 사용자 세부정보를 설정할거다.
         Function<String, String> passwordEncoder = input -> passwordEncoder().encode(input);
- 
-        // UserDetails userDetails = User.withDefaultPasswordEncoder() -> Deprecated
+
         UserDetails userDetails = User.builder().passwordEncoder(passwordEncoder)
-                .username("nareun")
-                .password("1234")
+                .username(username)
+                .password(password)
                 .roles("USER", "ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(userDetails);
+        return userDetails;
     }
 
     // * Spring의 Password 인코더 설정 */
