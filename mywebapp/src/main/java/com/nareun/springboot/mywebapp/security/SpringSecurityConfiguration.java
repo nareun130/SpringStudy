@@ -4,11 +4,14 @@ import java.util.function.Function;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SpringSecurityConfiguration {
@@ -49,4 +52,31 @@ public class SpringSecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    // * */ Spring Security 기본값
+    // 1. 모든 URL 요청 보호
+    // 2. 인증되지 않은 요청에 대해 로그인 폼이 보여짐
+
+    // * */ h2 console에 접속을 위해
+    // CSRF disable
+    // H2 consle 페이지 ->HTML Frames
+    // ! Spring Security는 기본적으로 CSRF diable & HTML Frames 허용 x
+    // ~> SecurityFilterChain이 맡음 -> 이 설정을 변경!
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // ? 기본 설정 -> 모든 요청 승인
+        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        // ? formLogin() 기본값 활성화 -> 승인 되지 않은 request는 login창
+        http.formLogin(Customizer.withDefaults());
+        // * Customizer.withDefaults() -> 기존 security 설정
+
+        // ~> lambda식으로 변환
+        // http.csrf().disable();
+        http.csrf(csrf -> csrf.disable());
+
+        // http.headers().frameOptions().disable();
+        http.headers((hedaers) -> hedaers.frameOptions((frameOptions) -> frameOptions.disable()));
+
+        return http.build();
+    }
 }
