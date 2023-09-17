@@ -23,7 +23,7 @@ public class SpringSecurityConfiguration {
         // * String을 받아서 String을 리턴 */
         //! 어떤 input이 와도 인코딩한다음 사용자 세부정보를 설정할거다.
         Function<String, String> passwordEncoder = input -> passwordEncoder().encode(input);
-
+ 
         // UserDetails userDetails = User.withDefaultPasswordEncoder() -> Deprecated
         UserDetails userDetails = User.builder().passwordEncoder(passwordEncoder)
                 .username("nareun")

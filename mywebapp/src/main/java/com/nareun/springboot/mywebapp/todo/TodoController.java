@@ -3,6 +3,8 @@ package com.nareun.springboot.mywebapp.todo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,10 +26,19 @@ public class TodoController {
         this.todoService = todoService;
     }
 
+    // * Spring Security로 부터 username을 가져옴. */
+    private String getLoggedinUsername(ModelMap model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     // /list-todos
     @RequestMapping("list-todos")
     public String listAllTodos(ModelMap model) {
-        List<Todo> todos = todoService.findByUserName("nareun");
+        String username = getLoggedinUsername(model);
+        ;
+
+        List<Todo> todos = todoService.findByUserName(username);
         model.addAttribute("todos", todos);
         return "listTodos";
     }
@@ -36,7 +47,7 @@ public class TodoController {
     @RequestMapping(value = "add-todo", method = RequestMethod.GET)
     public String showNewTodoPage(ModelMap model) {
         // * */todo등록 페이지에서 todo객체가 있어야 등록이 가능하므로 임시객체를 만들어서 Model에 넣어준다.
-        String username = (String) model.get("name");
+        String username = getLoggedinUsername(model);
         // Todo //여기서 username과 false만 직접 만들어준 값이 들어가지 않아서 form에 hiddend로 무조건 넣어줘야 하나?
         // ! Http 포로토콜의 비연결성 특성 때문 : 이전 요청처리에 대한 값을 다음 요청에서도 연속성을 갖기 위해 사용. -> 세션 등으로 대체
         // 가능
@@ -57,7 +68,7 @@ public class TodoController {
         // ~> localdate나 done같은 필드를 추가하게 되어도 Bean에 바운딩 될 것이다.
         // ~> 커맨드 빈 (Todo또는 Todo Bean을 보조객체 or 커맨드 빈으로 사용)
 
-        String username = (String) model.get("name");
+        String username = getLoggedinUsername(model);
         todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
 
         // ? 여기서 Model을 받아서 todo에 추가하고 listTodos를 호출하면 아무런 model이 없는 채로 view만 호출
@@ -86,7 +97,7 @@ public class TodoController {
             return "todo";
         }
 
-        String username = (String) model.get("name");
+        String username = getLoggedinUsername(model);
         todo.setUsername(username);
         todoService.updateTodo(todo);
 
