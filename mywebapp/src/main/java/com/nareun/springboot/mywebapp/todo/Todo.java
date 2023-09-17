@@ -2,12 +2,27 @@ package com.nareun.springboot.mywebapp.todo;
 
 import java.time.LocalDate;//* not java.util.LocalDate */
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
 //Database (MySQL)
 //Static List of todos => Database (H2, MySQL)
+
+//JPA
+//Bean -> Database Table
+@Entity
 public class Todo {
+
+    public Todo() {
+
+    }
+
+    @Id
+    @GeneratedValue 
     private int id;
+
     private String username;
 
     @Size(min = 10, message = "Enter at least 10 characters")

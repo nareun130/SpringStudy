@@ -17,9 +17,9 @@ public class TodoService {
 
     // ! 정적 변수를 초기화 하기 위해 static 블럭이 필요 -> 딱 한 번 수행
     static {
-        todos.add(new Todo(++todosCount, "nareun", "Learn AWS", LocalDate.now().plusYears(1), false));
-        todos.add(new Todo(++todosCount, "nareun", "Learn DevOps", LocalDate.now().plusYears(2), false));
-        todos.add(new Todo(++todosCount, "nareun", "Learn Fullstack DEvelopment", LocalDate.now().plusYears(3), false));
+        todos.add(new Todo(++todosCount, "nareun", "Learn AWS staticList", LocalDate.now().plusYears(1), false));
+        todos.add(new Todo(++todosCount, "nareun", "Learn DevOps staticList", LocalDate.now().plusYears(2), false));
+        todos.add(new Todo(++todosCount, "nareun", "Learn Fullstack DEvelopment staticList", LocalDate.now().plusYears(3), false));
     }
 
     public List<Todo> findByUserName(String username) {

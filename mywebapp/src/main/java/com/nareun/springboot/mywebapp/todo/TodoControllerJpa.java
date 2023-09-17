@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,15 +15,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.validation.Valid;
 
-// @Controller
+@Controller
 @SessionAttributes("name")
-public class TodoController {
+public class TodoControllerJpa {
 
-    private TodoService todoService;
+    private TodoRepository todoRepository;
 
-    public TodoController(TodoService todoService) {
+    public TodoControllerJpa(TodoRepository todoRepository) {
         super();
-        this.todoService = todoService;
+        this.todoRepository = todoRepository;
     }
 
     // * Spring Security로 부터 username을 가져옴. */
@@ -36,7 +37,7 @@ public class TodoController {
     public String listAllTodos(ModelMap model) {
         String username = getLoggedinUsername(model);
 
-        List<Todo> todos = todoService.findByUserName(username);
+        List<Todo> todos = todoRepository.findByUsername(username);
         model.addAttribute("todos", todos);
         return "listTodos";
     }
@@ -67,7 +68,11 @@ public class TodoController {
         // ~> 커맨드 빈 (Todo또는 Todo Bean을 보조객체 or 커맨드 빈으로 사용)
 
         String username = getLoggedinUsername(model);
-        todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);
+        todo.setUsername(username);
+
+        // 원래 : todoService.addTodo(username, todo.getDescription(),
+        // todo.getTargetDate(), todo.isDone());
+        todoRepository.save(todo);
 
         // ? 여기서 Model을 받아서 todo에 추가하고 listTodos를 호출하면 아무런 model이 없는 채로 view만 호출
         // * */-> 리디렉션 사용
@@ -77,14 +82,16 @@ public class TodoController {
 
     @RequestMapping("delete-todo")
     public String deleteTodo(@RequestParam int id) {
-        // Dete todo
-        todoService.deleteById(id);
+        // Delete todo
+        // todoService.deleteById(id);
+        todoRepository.deleteById(id);
         return "redirect:list-todos";
     }
 
     @RequestMapping(value = "update-todo", method = RequestMethod.GET)
     public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
-        Todo todo = todoService.findById(id);
+        // *findById가 Optional을 리턴해서 get()사용
+        Todo todo = todoRepository.findById(id).get();
         model.addAttribute("todo", todo);
         return "todo";
     }
@@ -97,7 +104,8 @@ public class TodoController {
 
         String username = getLoggedinUsername(model);
         todo.setUsername(username);
-        todoService.updateTodo(todo);
+        // todoService.updateTodo(todo);
+        todoRepository.save(todo);
 
         return "redirect:list-todos";
     }
