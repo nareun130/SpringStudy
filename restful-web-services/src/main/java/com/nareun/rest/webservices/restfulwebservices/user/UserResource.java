@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class UserResource {
+
+    // !REST API를 만들 때는 항상 소비자 입장에서 만들어야 한다.
+    
     private UserDaoService service;
 
     public UserResource(UserDaoService service) {
@@ -46,7 +51,7 @@ public class UserResource {
 
     // POST /users
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {// * */ 요청 본문은 ReqeustBody에
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {// * */ 요청 본문은 ReqeustBody에
         User savedUser = service.save(user);
 
         // /users/4 -> /users/{id}, user.getId()
