@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 public class UserResource {
 
     // !REST API를 만들 때는 항상 소비자 입장에서 만들어야 한다.
-    
+
     private UserDaoService service;
 
     public UserResource(UserDaoService service) {
