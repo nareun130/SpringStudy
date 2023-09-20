@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class UserResource {
+
+    // !REST API를 만들 때는 항상 소비자 입장에서 만들어야 한다.
+    
     private UserDaoService service;
 
     public UserResource(UserDaoService service) {
@@ -37,9 +43,15 @@ public class UserResource {
 
     }
 
+    // DELETE /users/{id}
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        service.deleteById(id);
+    }
+
     // POST /users
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {// * */ 요청 본문은 ReqeustBody에
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {// * */ 요청 본문은 ReqeustBody에
         User savedUser = service.save(user);
 
         // /users/4 -> /users/{id}, user.getId()
