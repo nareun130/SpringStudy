@@ -4,19 +4,31 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
+@Entity(name = "user_details")
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
 
     @Size(min = 2, message = "Name should have at least 2 characters")
     @JsonProperty("user_name")
     private String name;
-    @Past(message = "Birth Date shoud be in the past") // *과거 날짜로 조건 설정 */
+
     @JsonProperty("birth_date")
+    @Past(message = "Birth Date shoud be in the past") // *과거 날짜로 조건 설정 */
     private LocalDate birthDate;
+
+    // ! JPA사용을 위해 기본 생성자 필요
+    public User() {
+
+    }
 
     public User(Integer id, String name, LocalDate birthDate) {
         super();
