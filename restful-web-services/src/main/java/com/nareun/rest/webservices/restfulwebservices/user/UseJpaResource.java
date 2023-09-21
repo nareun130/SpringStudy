@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -16,23 +17,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.nareun.rest.webservices.restfulwebservices.jpa.UserRepository;
+
 import jakarta.validation.Valid;
 
 @RestController
-public class UserResource {
+public class UseJpaResource {
 
-    // !REST API를 만들 때는 항상 소비자 입장에서 만들어야 한다.
+    private UserRepository repository;
 
-    private UserDaoService service;
-
-    public UserResource(UserDaoService service) {
-        this.service = service;
+    public UseJpaResource(UserRepository repository) {
+        this.repository = repository;
     }
 
     // GET /users
-    @GetMapping("/users")
+    @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
-        return service.findAll();
+        // return service.findAll();
+        return repository.findAll();
     }
 
     // GET /users/{id}
@@ -40,33 +42,35 @@ public class UserResource {
     // 1. EntityModel : HATEOAS를 사용하여 링크를 추가하려고 EntityModel로 감싸준다.
     // 2. WebMvcLinkBuilder : EntityModel에 링크를 달아주기 위해서
     // http://localhost:8080/users
-    @GetMapping("/users/{id}")
+    @GetMapping("/jpa/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
-        User user = service.findOne(id);
 
-        if (user == null)
+        Optional<User> user = repository.findById(id);
+
+        if (user.isEmpty()) // * Optional식 null 체크
             throw new UserNotFoundException("id : " + id);
 
-        EntityModel<User> entityModel = EntityModel.of(user);
+        EntityModel<User> entityModel = EntityModel.of(user.get());
 
-        //~> 이 클래스의 메서드에 해당하는 링크를 붙여준다.
+        // ~> 이 클래스의 메서드에 해당하는 링크를 붙여준다.
         WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
-        entityModel.add(link.withRel("all-usrers"));//링크에 대한 관계 설정
+        entityModel.add(link.withRel("all-usrers"));// 링크에 대한 관계 설정
 
         return entityModel;
 
     }
 
     // DELETE /users/{id}
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        service.deleteById(id);
+        // service.deleteById(id);
+        repository.deleteById(id);
     }
 
     // POST /users
-    @PostMapping("/users")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {// * */ 요청 본문은 ReqeustBody에
-        User savedUser = service.save(user);
+    @PostMapping("/jpa/users")
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {// * 요청 본문은 ReqeustBody에
+        User savedUser = repository.save(user);
 
         // /users/4 -> /users/{id}, user.getId()
         // ? Response에 location 헤더를 붙여준다. -> 저장한 결과를 확인할 수 있는 URL을 준다.
