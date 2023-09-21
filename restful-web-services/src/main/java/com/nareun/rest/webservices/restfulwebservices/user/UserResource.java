@@ -1,8 +1,12 @@
 package com.nareun.rest.webservices.restfulwebservices.user;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +36,24 @@ public class UserResource {
     }
 
     // GET /users/{id}
+    // * HATEOAS :데이터 외에도 몇 개의 링크를 반환하여 사용자에게 후속작업을 수행하는 방법을 알려줌.
+    // 1. EntityModel : HATEOAS를 사용하여 링크를 추가하려고 EntityModel로 감싸준다.
+    // 2. WebMvcLinkBuilder : EntityModel에 링크를 달아주기 위해서
+    // http://localhost:8080/users
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
         User user = service.findOne(id);
 
         if (user == null)
             throw new UserNotFoundException("id : " + id);
 
-        return user;
+        EntityModel<User> entityModel = EntityModel.of(user);
+
+        //~> 이 클래스의 메서드에 해당하는 링크를 붙여준다.
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        entityModel.add(link.withRel("all-usrers"));//링크에 대한 관계 설정
+
+        return entityModel;
 
     }
 

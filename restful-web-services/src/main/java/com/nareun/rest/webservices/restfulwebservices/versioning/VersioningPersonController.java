@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class VersioningPersonController {
-    //! 버전관리가 필요하기 전에도 버전 관리에 대해 고려하는 것이 좋다.
-    //! REST API 구축 전에 버전 관리에 대해 고민해야 한다.
+    // ! 버전관리가 필요하기 전에도 버전 관리에 대해 고려하는 것이 좋다.
+    // ! REST API 구축 전에 버전 관리에 대해 고민해야 한다.
 
-    //* REST API 버전관리 -> 어떤 방식을 선택하든지 일관된 방식으로!!!
+    // * REST API 버전관리 -> 어떤 방식을 선택하든지 일관된 방식으로!!!
     // * 1. URI 버전관리 - Twitter
     @GetMapping("/v1/person")
     public PersonV1 getFirstVersionOfPerson() {
@@ -20,7 +20,7 @@ public class VersioningPersonController {
         return new PersonV2(new Name("Bob", "Charlie"));
     }
 
-    // * 2. 파라미터 버전 관리 - Amazon
+    // * 2. 파라미터 버bb 전 관리 - Amazon
     // /person?version=1
     @GetMapping(path = "/person", params = "version=1")
     public PersonV1 getFirstVersionOfPersonRequestParameter() {
