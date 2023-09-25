@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Post {
@@ -15,11 +16,12 @@ public class Post {
     @GeneratedValue
     private Integer id;
 
+    @Size(min = 10)
     private String description;
 
-    @ManyToOne(fetch=FetchType.LAZY)//* 기본 값은  EAGER : 게시물 정보를 가져올 때 사용자 정보도 같이 가져옴. -> LAZY 변환
+    @ManyToOne(fetch = FetchType.LAZY) // * 기본 값은 EAGER : 게시물 정보를 가져올 때 사용자 정보도 같이 가져옴. -> LAZY 변환
     @JsonIgnore
-    private User user; //~> 게시물 여러 개 당 user한명
+    private User user; // ~> 게시물 여러 개 당 user한명
 
     public Integer getId() {
         return id;
@@ -35,6 +37,14 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

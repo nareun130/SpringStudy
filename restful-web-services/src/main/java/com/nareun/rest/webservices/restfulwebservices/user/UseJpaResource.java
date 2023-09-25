@@ -1,6 +1,7 @@
 package com.nareun.rest.webservices.restfulwebservices.user;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.net.URI;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.nareun.rest.webservices.restfulwebservices.jpa.PostRepository;
 import com.nareun.rest.webservices.restfulwebservices.jpa.UserRepository;
 
 import jakarta.validation.Valid;
@@ -26,8 +28,11 @@ public class UseJpaResource {
 
     private UserRepository repository;
 
-    public UseJpaResource(UserRepository repository) {
+    private PostRepository postRepository;
+
+    public UseJpaResource(UserRepository repository, PostRepository postRepository) {
         this.repository = repository;
+        this.postRepository = postRepository;
     }
 
     // GET /users
@@ -60,11 +65,38 @@ public class UseJpaResource {
 
     }
 
+    @GetMapping("/jpa/users/{id}/posts/{postId}")
+    public EntityModel<Post> retrievePost(@PathVariable int id, @PathVariable int postId) {
+
+        Post post = postRepository.findById(postId).get();
+        if (post.getUser().getId() != id)
+            throw new RuntimeException("해당 게시물이 존재하지 않습니다 : " + postId);
+
+        EntityModel<Post> entityModel = EntityModel.of(post);
+
+        // ~> 이 클래스의 메서드에 해당하는 링크를 붙여준다.
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrievePostsForUser(id));
+        entityModel.add(link.withRel("all-posts-user"));// 링크에 대한 관계 설정
+
+        return entityModel;
+
+    }
+
     // DELETE /users/{id}
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
         // service.deleteById(id);
         repository.deleteById(id);
+    }
+
+    @GetMapping("/jpa/users/{id}/posts")
+    public List<Post> retrievePostsForUser(@PathVariable int id) {
+        Optional<User> user = repository.findById(id);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("id : " + id);
+
+        return user.get().getPosts();
     }
 
     // POST /users
@@ -80,6 +112,25 @@ public class UseJpaResource {
                 .buildAndExpand(savedUser.getId())
                 .toUri();
         // ! 리소스 생성할 때는 생성됐다는 상태를 응답으로 보내주는게 좋다.
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/jpa/users/{id}/posts")
+    public ResponseEntity<Object> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
+        Optional<User> user = repository.findById(id);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("id : " + id);
+
+        post.setUser(user.get());
+        Post savedPost = postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
+
         return ResponseEntity.created(location).build();
     }
 }
