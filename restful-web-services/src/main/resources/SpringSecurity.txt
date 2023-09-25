@@ -1,0 +1,12 @@
+Spring Security
+요청을 보낼때마다 Security가 요청을 가로채서 일련의 필터를 실행 
+-> FilterChains
+
+FilterChains의 역할
+1. 모든 요청이 인증되어야 한다.
+2. 인증되지 않았거나 자격증명이 되지 않으면 기본 페이지 나타내줌.
+3. CSRF -> POST, PUT
+
+Spring Security에서 기존 필터체인을 오버라이드 하렴녀 체인 전체를 다시 정의해야 한다.
+-> 설정
+Bean FilterChain
