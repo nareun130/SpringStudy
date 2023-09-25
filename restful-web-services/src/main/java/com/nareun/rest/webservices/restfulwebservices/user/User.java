@@ -21,11 +21,11 @@ public class User {
     private Integer id;
 
     @Size(min = 2, message = "Name should have at least 2 characters")
-    @JsonProperty("user_name")
+    // @JsonProperty("user_name")
     private String name;
 
-    @JsonProperty("birth_date")
     @Past(message = "Birth Date shoud be in the past") // *과거 날짜로 조건 설정 */
+    // @JsonProperty("birth_date")
     private LocalDate birthDate;
 
     // ~> 유저 1명당 여러개의 게시물

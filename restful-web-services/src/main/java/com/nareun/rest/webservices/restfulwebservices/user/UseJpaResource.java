@@ -26,12 +26,12 @@ import jakarta.validation.Valid;
 @RestController
 public class UseJpaResource {
 
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     private PostRepository postRepository;
 
-    public UseJpaResource(UserRepository repository, PostRepository postRepository) {
-        this.repository = repository;
+    public UseJpaResource(UserRepository userRepository, PostRepository postRepository) {
+        this.userRepository = userRepository;
         this.postRepository = postRepository;
     }
 
@@ -39,7 +39,7 @@ public class UseJpaResource {
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers() {
         // return service.findAll();
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     // GET /users/{id}
@@ -50,7 +50,7 @@ public class UseJpaResource {
     @GetMapping("/jpa/users/{id}")
     public EntityModel<User> retrieveUser(@PathVariable int id) {
 
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty()) // * Optional식 null 체크
             throw new UserNotFoundException("id : " + id);
@@ -86,12 +86,12 @@ public class UseJpaResource {
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id) {
         // service.deleteById(id);
-        repository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     @GetMapping("/jpa/users/{id}/posts")
     public List<Post> retrievePostsForUser(@PathVariable int id) {
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty())
             throw new UserNotFoundException("id : " + id);
@@ -102,9 +102,9 @@ public class UseJpaResource {
     // POST /users
     @PostMapping("/jpa/users")
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {// * 요청 본문은 ReqeustBody에
-        User savedUser = repository.save(user);
+        User savedUser = userRepository.save(user);
 
-        // /users/4 -> /users/{id}, user.getId()
+        // /users/4 -> /users/{id}, user.getId()    
         // ? Response에 location 헤더를 붙여준다. -> 저장한 결과를 확인할 수 있는 URL을 준다.
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -117,7 +117,7 @@ public class UseJpaResource {
 
     @PostMapping("/jpa/users/{id}/posts")
     public ResponseEntity<Object> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty())
             throw new UserNotFoundException("id : " + id);
