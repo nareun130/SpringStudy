@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.nareun.rest.webservices.restfulwebservices.user.UserNotFoundException;   
+import com.nareun.rest.webservices.restfulwebservices.user.UserNotFoundException;
 
 @ControllerAdvice // ~> 모든 컨틀롤러에게 적용한다.
 public class CustomizedResponseEntityException extends ResponseEntityExceptionHandler {
