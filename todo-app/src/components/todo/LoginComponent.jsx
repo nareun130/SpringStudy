@@ -7,8 +7,6 @@ export default function LoginComponent() {
 
   const [password, setPassword] = useState("");
 
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const navigate = useNavigate();
@@ -22,19 +20,9 @@ export default function LoginComponent() {
     setPassword(event.target.value);
   }
   function handleSubmit() {
-    console.log(username);
-    console.log(password);
-    if (username === "nareun" && password === "1234") {
-      authContext.setAuthenticated(true);
-      console.log("successs");
-      setShowSuccessMessage(true);
-      setShowErrorMessage(false);
-      //* url을 통해 라우터에 값 넘겨주기
+    if (authContext.login(username, password)) {
       navigate(`/welcome/${username}`);
     } else {
-      authContext.setAuthenticated(false);
-      console.log("failed");
-      setShowSuccessMessage(false);
       setShowErrorMessage(true);
     }
   }
@@ -42,7 +30,6 @@ export default function LoginComponent() {
   return (
     <div className="Login">
       <h1>Time to Login</h1>
-      {showSuccessMessage && <div className="successMessage">Authenticated Successfully</div>}
       {showErrorMessage && <div className="errorMessage">Authenticated Failed. Please check your credentials.</div>}
       <div className="LoginForm">
         <div>
