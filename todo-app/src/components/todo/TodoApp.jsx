@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import "./TodoApp.css";
 export default function TodoApp() {
   return (
     <div className="TodoApp">
+      <HeaderComponent />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginComponent />}></Route>
-          <Route path="/login" element={<LoginComponent />}></Route>
-          <Route path="/welcome/:username" element={<WelcomeComponent />}></Route>
-          <Route path="*" element={<ErrorComponent />}></Route>
+          <Route path="/" element={<LoginComponent />} />
+          <Route path="/login" element={<LoginComponent />} />
+          <Route path="/welcome/:username" element={<WelcomeComponent />} />
+          <Route path="/todos" element={<ListTodosComponent />} />
+          <Route path="/logout" element={<LogoutComponent />} />
+          <Route path="*" element={<ErrorComponent />} />
         </Routes>
       </BrowserRouter>
+      <FooterComponent />
     </div>
   );
 }
@@ -77,13 +81,15 @@ function WelcomeComponent() {
   //기본 Java 식
   // const params = useParams();
   // console.log(params.username);
-  //*JS에서 많이 쓰는 방법 -> 객체를 받는 대신 객체의 값을 받는 것 
-  const {username} = useParams();
+  //*JS에서 많이 쓰는 방법 -> 객체를 받는 대신 객체의 값을 받는 것
+  const { username } = useParams();
   console.log(username);
   return (
-    <div className="Welcome">
+    <div className="WelcomeComponent">
       <h1>Welcome {username}</h1>
-      <div>Welcome Component</div>
+      <div>
+        Manage your todos - <Link to="/todos">Go here</Link>
+      </div>
     </div>
   );
 }
@@ -93,6 +99,65 @@ function ErrorComponent() {
     <div className="ErrorComponent">
       <h1>We are working really hard!</h1>
       <div>Apologies for the 404. Reach out to our team at ABC-DEF-GHIJ.</div>
+    </div>
+  );
+}
+
+function ListTodosComponent() {
+  const today = new Date();
+  const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate());
+  const todos = [
+    { id: 1, description: "Learn AWS", done: false, targetDate: targetDate },
+    { id: 2, description: "Learn Full Stack Dev", done: false, targetDate: targetDate },
+    { id: 3, description: "Learn DevOps", done: false, targetDate: targetDate },
+  ];
+  return (
+    <div className="container">
+      <h1>Things You Want To Do!</h1>
+      <div>Todo Details</div>
+      <table className="table">
+        <thead>
+          <tr>
+            <td>id</td>
+            <td>description</td>
+            <td>Is Done?</td>
+            <td>Target Date</td>
+          </tr>
+        </thead>
+        <tbody>
+          {todos.map((todo) => (
+            <tr key={todo.id}>
+              <td>{todo.id}</td>
+              <td>{todo.description}</td>
+              <td>{todo.done.toString()}</td>
+              <td>{todo.targetDate.toDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+function HeaderComponent() {
+  return (
+    <div className="header">
+      Header <hr />
+    </div>
+  );
+}
+function FooterComponent() {
+  return (
+    <div className="footer">
+      <hr />
+      Footer
+    </div>
+  );
+}
+function LogoutComponent() {
+  return (
+    <div className="LogoutComponent">
+      <h1>You are logged out!</h1>
+      <div>Thank you for using our App. come back soon!</div>
     </div>
   );
 }
