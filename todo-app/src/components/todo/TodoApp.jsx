@@ -6,9 +6,11 @@ import LoginComponent from "./LoginComponent";
 import LogoutComponent from "./LogoutComponent";
 import "./TodoApp.css";
 import WelcomeComponent from "./WelcomeComponent";
+import AuthProvider from "./security/AuthContext";
 export default function TodoApp() {
   return (
     <div className="TodoApp">
+      <AuthProvider>
       <BrowserRouter>
         <HeaderComponent />
         <Routes>
@@ -20,6 +22,7 @@ export default function TodoApp() {
           <Route path="*" element={<ErrorComponent />} />
         </Routes>
       </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

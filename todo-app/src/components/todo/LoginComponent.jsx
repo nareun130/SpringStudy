@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./security/AuthContext";
 
 export default function LoginComponent() {
   const [username, setUsername] = useState("nareun");
@@ -12,6 +13,8 @@ export default function LoginComponent() {
 
   const navigate = useNavigate();
 
+  const authContext = useAuth();
+
   function handleUsernameChange(event) {
     setUsername((username) => event.target.value);
   }
@@ -22,12 +25,14 @@ export default function LoginComponent() {
     console.log(username);
     console.log(password);
     if (username === "nareun" && password === "1234") {
+      authContext.setAuthenticated(true);
       console.log("successs");
       setShowSuccessMessage(true);
       setShowErrorMessage(false);
       //* url을 통해 라우터에 값 넘겨주기
       navigate(`/welcome/${username}`);
     } else {
+      authContext.setAuthenticated(false);
       console.log("failed");
       setShowSuccessMessage(false);
       setShowErrorMessage(true);

@@ -6,7 +6,6 @@ export default function WelcomeComponent() {
     // console.log(params.username);
     //*JS에서 많이 쓰는 방법 -> 객체를 받는 대신 객체의 값을 받는 것
     const { username } = useParams();
-    console.log(username);
     return (
       <div className="WelcomeComponent">
         <h1>Welcome {username}</h1>
