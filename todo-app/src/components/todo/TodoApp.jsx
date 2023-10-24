@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import "./TodoApp.css";
 export default function TodoApp() {
   return (
@@ -8,7 +8,7 @@ export default function TodoApp() {
         <Routes>
           <Route path="/" element={<LoginComponent />}></Route>
           <Route path="/login" element={<LoginComponent />}></Route>
-          <Route path="/welcome" element={<WelcomeComponent />}></Route>
+          <Route path="/welcome/:username" element={<WelcomeComponent />}></Route>
           <Route path="*" element={<ErrorComponent />}></Route>
         </Routes>
       </BrowserRouter>
@@ -40,7 +40,8 @@ function LoginComponent() {
       console.log("successs");
       setShowSuccessMessage(true);
       setShowErrorMessage(false);
-      navigate("/welcome");
+      //* url을 통해 라우터에 값 넘겨주기
+      navigate(`/welcome/${username}`);
     } else {
       console.log("failed");
       setShowSuccessMessage(false);
@@ -73,9 +74,15 @@ function LoginComponent() {
 }
 
 function WelcomeComponent() {
+  //기본 Java 식
+  // const params = useParams();
+  // console.log(params.username);
+  //*JS에서 많이 쓰는 방법 -> 객체를 받는 대신 객체의 값을 받는 것 
+  const {username} = useParams();
+  console.log(username);
   return (
     <div className="Welcome">
-      <h1>Welcome nareun</h1>
+      <h1>Welcome {username}</h1>
       <div>Welcome Component</div>
     </div>
   );
