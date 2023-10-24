@@ -1,11 +1,9 @@
 import "./App.css";
-import Counter from "./component/counter/Counter";
-
+import TodoApp from "./components/todo/TodoApp";
 function App() {
   return (
     <div className="App">
-      {/* <PlayingWithProps property1="value1" property2="value2" /> */}
-      <Counter />
+      <TodoApp />
     </div>
   );
 }
