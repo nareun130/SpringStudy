@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RestWebServicesApplication",
+            "request": "launch",
+            "mainClass": "com.nareun.rest.webservices.RestWebServicesApplication",
+            "projectName": "rest-web-services"
+        },
+        {
+            "type": "java",
             "name": "RestWebApplication",
             "request": "launch",
             "mainClass": "com.nareun.rest.web.restweb.RestWebApplication",
