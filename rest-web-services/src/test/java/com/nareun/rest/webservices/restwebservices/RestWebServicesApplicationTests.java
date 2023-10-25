@@ -1,10 +1,10 @@
-package com.nareun.rest.web.restweb;
+package com.nareun.rest.webservices.restwebservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestWebApplicationTests {
+class RestWebServicesApplicationTests {
 
 	@Test
 	void contextLoads() {

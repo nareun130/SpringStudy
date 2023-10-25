@@ -8,10 +8,10 @@
 		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.nareun.rest.web</groupId>
-	<artifactId>rest-web</artifactId>
+	<groupId>com.nareun.rest.webservices</groupId>
+	<artifactId>rest-web-services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rest-web</name>
+	<name>rest-web-services</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
