@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { executeBasicAuthenticationService } from "../api/HelloWorldApiService";
 //* 인증 관련 로직
 //1. 컨텍스트 생성
 //!. 다른 컴포넌트에서 접근을 가능하게 해주기 위해 export를 사용
@@ -16,16 +17,37 @@ export default function AuthProvider({ children }) {
 
   const [username, setUsername] = useState(null);
 
+  // function login(username, password) {
+  //   if (username === "nareun130" && password === "1234") {
+  //     setAuthenticated(true);
+  //     setUsername(username);
+  //     return true;
+  //   } else {
+  //     setAuthenticated(false);
+  //     setUsername(null);
+  //     return false;
+  //   }
+  // }
+
+  //? 기본 인증
   function login(username, password) {
-    if (username === "nareun130" && password === "1234") {
-      setAuthenticated(true);
-      setUsername(username);
-      return true;
-    } else {
-      setAuthenticated(false);
-      setUsername(null);
-      return false;
-    }
+    //*Base64로 인코딩된 아스키2 문자열 반환
+    const basicToken = "Basic " + window.btoa(username + ":" + password);
+    executeBasicAuthenticationService(basicToken)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+
+    setAuthenticated(false);
+
+    // if (username === "nareun130" && password === "1234") {
+    //   setAuthenticated(true);
+    //   setUsername(username);
+    //   return true;
+    // } else {
+    //   setAuthenticated(false);
+    //   setUsername(null);
+    //   return false;
+    // }
   }
   function logout() {
     setAuthenticated(false);

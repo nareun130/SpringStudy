@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
+    //? 기본 인증 간단 구현
+    @GetMapping(path = "/basicauth")
+    public String basicAuthCheck() {
+        return "Success";
+    }
+
     @GetMapping(path = "/hello-world")
     public String helloWorld() {
         return "Hello World v2";
