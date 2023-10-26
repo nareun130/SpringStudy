@@ -17,13 +17,12 @@ export default function ListTodosComponent() {
   const [todos, setTodos] = useState([]);
 
   const [message, setMessage] = useState(null);
+
   useEffect(() => refreshTodos(), []);
 
   function refreshTodos() {
-    console.log("refreshTodos");
     retrieveAllTodosForUsernameApi(username)
       .then((response) => {
-        console.log(response);
         setTodos(response.data);
       })
       .catch((error) => console.log(error));
@@ -52,11 +51,10 @@ export default function ListTodosComponent() {
     navigate("/todo/-1");
   }
   return (
-    <div>
-      <div className="container">
-        <h1>Things You Want To Do!</h1>
-        {message && <div className="alert alert-warning">{message}</div>}
-        <div>Todo Details</div>
+    <div className="container">
+      <h1>Things You Want To Do!</h1>
+      {message && <div className="alert alert-warning">{message}</div>}
+      <div>
         <table className="table">
           <thead>
             <tr>

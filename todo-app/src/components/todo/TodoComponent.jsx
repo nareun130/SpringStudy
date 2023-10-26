@@ -7,14 +7,15 @@ import moment from "moment";
 
 export default function TodoComponent() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const authContext = useAuth();
-  const username = authContext.username;
-
   const [description, setDescription] = useState("");
   const [targetDate, setTargetDate] = useState("");
 
+  const authContext = useAuth();
+  const navigate = useNavigate();
+  const username = authContext.username;
+
   useEffect(() => retrieveTodos(), [id]);
+
   function retrieveTodos() {
     if (id != -1) {
       retrieveTodoApi(username, id)
@@ -28,6 +29,7 @@ export default function TodoComponent() {
   //* Form의 value들을 가져온다.
   function onSubmit(values) {
     console.log(values);
+
     const todo = {
       id: id,
       username: username,

@@ -23,7 +23,8 @@ public class BasicAuthenticationSecurityConfiguration {
                 auth -> auth.anyRequest().authenticated());
         // * http 기본 인증 설정 -> 팝업
         http.httpBasic(Customizer.withDefaults());
-        // * 상태가 없는 세션을 만들어줌. -> server side에 client와 server의 동작, 상태정보를 저장하지 않는 형태,
+        // * 상태가 없는 세션을 만들어줌. 
+        //* -> 세션 정보나 쿠키 정보를 별도로 저장하고 관리하지 않기 때문에 API서버는 들어오는 요청만을 단순히 처리하면 됨. 서비스 자유도 높아지고, 서버의 구현이 단순해짐.
         // server의 응답이 client와의 세션 상태와 독립적임
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // ! CSRF를 비활성화 하기 위해서는 세션에 상태가 없어야 한다.
