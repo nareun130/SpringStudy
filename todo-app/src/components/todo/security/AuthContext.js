@@ -14,12 +14,16 @@ export default function AuthProvider({ children }) {
   //3. 컨텍스트에 state 추가
   const [isAuthenticated, setAuthenticated] = useState(false);
 
+  const [username, setUsername] = useState(null);
+
   function login(username, password) {
     if (username === "nareun130" && password === "1234") {
       setAuthenticated(true);
+      setUsername(username);
       return true;
     } else {
       setAuthenticated(false);
+      setUsername(null);
       return false;
     }
   }
@@ -27,5 +31,5 @@ export default function AuthProvider({ children }) {
     setAuthenticated(false);
   }
   //?-> AuthProvider아래 모든 자식 컴포넌트가 childer에 들어간다.
-  return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuthenticated, login, logout, username }}>{children}</AuthContext.Provider>;
 }
