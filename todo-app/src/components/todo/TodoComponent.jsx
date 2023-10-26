@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { retrieveTodoApi, updateTodoApi } from "./api/TodoApiService";
+import { createTodoApi, retrieveTodoApi, updateTodoApi } from "./api/TodoApiService";
 import { useAuth } from "./security/AuthContext";
 import { Field, Formik, Form, ErrorMessage } from "formik";
+import moment from "moment";
 
 export default function TodoComponent() {
   const { id } = useParams();
@@ -16,12 +17,14 @@ export default function TodoComponent() {
   useEffect(() => retrieveTodos(), [id]);
 
   function retrieveTodos() {
-    retrieveTodoApi(username, id)
-      .then((response) => {
-        setDescription(response.data.description);
-        setTargetDate(response.data.targetDate);
-      })
-      .catch((error) => console.log(error));
+    if (id != -1) {
+      retrieveTodoApi(username, id)
+        .then((response) => {
+          setDescription(response.data.description);
+          setTargetDate(response.data.targetDate);
+        })
+        .catch((error) => console.log(error));
+    }
   }
   //* Form으 value들을 가져온다.
   function onSubmit(values) {
@@ -34,9 +37,16 @@ export default function TodoComponent() {
       isDone: false,
     };
     console.log(todo);
-    updateTodoApi(username, id, todo)
-      .then(navigate("/todos"))
-      .catch((error) => console.log(error));
+
+    if (id == -1) {
+      createTodoApi(username, todo)
+        .then(navigate("/todos"))
+        .catch((error) => console.log(error));
+    } else {
+      updateTodoApi(username, id, todo)
+        .then(navigate("/todos"))
+        .catch((error) => console.log(error));
+    }
   }
 
   function validate(values) {
@@ -46,7 +56,7 @@ export default function TodoComponent() {
       //   targetDate: "Enter a valid target date",
     };
     if (values.description.length < 5) errors.description = "Enter at least 5 characters";
-    if (values.targetDate === "") errors.targetDate = "Enter a target date";
+    if (values.targetDate === "" || values.targetDate == null || !moment(values.targetDate).isValid()) errors.targetDate = "Enter a target date";
     if (targetDate <= Date.now()) errors.targetDate = "Enter a later date";
 
     return errors;
