@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { retrieveTodoApi } from "./api/TodoApiService";
+import { useNavigate, useParams } from "react-router-dom";
+import { retrieveTodoApi, updateTodoApi } from "./api/TodoApiService";
 import { useAuth } from "./security/AuthContext";
 import { Field, Formik, Form, ErrorMessage } from "formik";
-import { validate } from "json-schema";
 
 export default function TodoComponent() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const authContext = useAuth();
   const username = authContext.username;
 
@@ -26,6 +26,17 @@ export default function TodoComponent() {
   //* Form으 value들을 가져온다.
   function onSubmit(values) {
     console.log(values);
+    const todo = {
+      id: id,
+      username: username,
+      description: values.description,
+      targetDate: values.targetDate,
+      isDone: false,
+    };
+    console.log(todo);
+    updateTodoApi(username, id, todo)
+      .then(navigate("/todos"))
+      .catch((error) => console.log(error));
   }
 
   function validate(values) {
