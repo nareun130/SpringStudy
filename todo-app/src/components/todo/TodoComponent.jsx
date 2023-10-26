@@ -15,7 +15,6 @@ export default function TodoComponent() {
   const [targetDate, setTargetDate] = useState("");
 
   useEffect(() => retrieveTodos(), [id]);
-
   function retrieveTodos() {
     if (id != -1) {
       retrieveTodoApi(username, id)
@@ -26,7 +25,7 @@ export default function TodoComponent() {
         .catch((error) => console.log(error));
     }
   }
-  //* Form으 value들을 가져온다.
+  //* Form의 value들을 가져온다.
   function onSubmit(values) {
     console.log(values);
     const todo = {
@@ -34,7 +33,7 @@ export default function TodoComponent() {
       username: username,
       description: values.description,
       targetDate: values.targetDate,
-      isDone: false,
+      done: false,
     };
     console.log(todo);
 

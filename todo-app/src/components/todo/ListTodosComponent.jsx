@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteTodoApi, retrieveAllTodosForUsernameApi } from "./api/TodoApiService";
 import { useAuth } from "./security/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 export default function ListTodosComponent() {
   const today = new Date();
@@ -10,17 +10,20 @@ export default function ListTodosComponent() {
 
   const username = authContext.username;
 
+  const navigate = useNavigate();
+
   const targetDate = new Date(today.getFullYear() + 12, today.getMonth(), today.getDate());
 
   const [todos, setTodos] = useState([]);
 
-  const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   useEffect(() => refreshTodos(), []);
 
   function refreshTodos() {
+    console.log("refreshTodos");
     retrieveAllTodosForUsernameApi(username)
       .then((response) => {
+        console.log(response);
         setTodos(response.data);
       })
       .catch((error) => console.log(error));
