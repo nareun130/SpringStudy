@@ -1,6 +1,6 @@
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { retrieveHelloWorldPathVariable } from "./api/HelloWorldApiService";
 export default function WelcomeComponent() {
   //기본 Java 식
   // const params = useParams();
@@ -10,17 +10,10 @@ export default function WelcomeComponent() {
 
   const [message, setMessage] = useState(null);
   function callHelloWorldRestApi() {
-    console.log("hello");
+    console.log("called");
     //axios
     //? 비동기적 접근법으로 promise를 받아와서 받아온 promise를 다룬다.
-    // axios
-    //   .get("http://localhost:8080/hello-world")
-    //   .then((response) => successfulResponse(response))
-    //   .catch((error) => errorResponse(error))
-    //   .finally(() => console.log("cleanup"));
-
-    axios
-      .get("http://localhost:8080/hello-world-bean")
+    retrieveHelloWorldPathVariable("nareun")
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("cleanup"));

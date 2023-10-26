@@ -15,7 +15,7 @@ export default function AuthProvider({ children }) {
   const [isAuthenticated, setAuthenticated] = useState(false);
 
   function login(username, password) {
-    if (username === "nareun" && password === "1234") {
+    if (username === "nareun130" && password === "1234") {
       setAuthenticated(true);
       return true;
     } else {

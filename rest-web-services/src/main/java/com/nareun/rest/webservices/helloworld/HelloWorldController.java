@@ -14,10 +14,10 @@ public class HelloWorldController {
 
     @GetMapping(path = "/hello-world-bean")
     public HelloWorldBean helloWorldBean() {
-        return new HelloWorldBean("Hello World! v1");
+        return new HelloWorldBean("Hello World! v2");
     }
 
-    @GetMapping(path = "/hello-wrold/path-variable/{name}")
+    @GetMapping(path = "/hello-world/path-variable/{name}")
     public HelloWorldBean helloWorldBeanPathVariable(@PathVariable String name) {
         return new HelloWorldBean(String.format("Hello World, %s", name));
     }
