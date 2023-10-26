@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+@Configuration // * -> jwt를 사용할 때는 이 어노테이션을 해제
 public class BasicAuthenticationSecurityConfiguration {
 
     // Filter Chain
