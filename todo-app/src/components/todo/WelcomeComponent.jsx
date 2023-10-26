@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { retrieveHelloWorldPathVariable } from "./api/HelloWorldApiService";
+import { useAuth } from "./security/AuthContext";
 export default function WelcomeComponent() {
   //기본 Java 식
   // const params = useParams();
@@ -9,11 +10,14 @@ export default function WelcomeComponent() {
   const { username } = useParams();
 
   const [message, setMessage] = useState(null);
+
+  const authContext = useAuth();
+
   function callHelloWorldRestApi() {
     console.log("called");
     //axios
     //? 비동기적 접근법으로 promise를 받아와서 받아온 promise를 다룬다.
-    retrieveHelloWorldPathVariable("nareun")
+    retrieveHelloWorldPathVariable("nareun", authContext.token)
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("cleanup"));

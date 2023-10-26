@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { executeBasicAuthenticationService } from "../api/HelloWorldApiService";
+import { apiClient } from "../api/ApiClient";
 //* 인증 관련 로직
 //1. 컨텍스트 생성
 //!. 다른 컴포넌트에서 접근을 가능하게 해주기 위해 export를 사용
@@ -17,6 +18,7 @@ export default function AuthProvider({ children }) {
 
   const [username, setUsername] = useState(null);
 
+  const [token, setToken] = useState(null);
   // function login(username, password) {
   //   if (username === "nareun130" && password === "1234") {
   //     setAuthenticated(true);
@@ -30,28 +32,41 @@ export default function AuthProvider({ children }) {
   // }
 
   //? 기본 인증
-  function login(username, password) {
+  //! 인증 작업이 끝나고 나서 set Authenticated를 해주기 위해 async, await을 사용
+  //~> login의 handleSubmit도 async를 사용해준다.
+  async function login(username, password) {
     //*Base64로 인코딩된 아스키2 문자열 반환
     const basicToken = "Basic " + window.btoa(username + ":" + password);
-    executeBasicAuthenticationService(basicToken)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    try {
+      const response = await executeBasicAuthenticationService(basicToken);
+      if (response.status == 200) {
+        setAuthenticated(true);
+        setUsername(username);
+        setToken(basicToken);
 
-    setAuthenticated(false);
+        //* 모든 Request의 header에 인증토큰을 넣어준다.
+        apiClient.interceptors.request.use((config) => {
+          console.log("intercepting and adding a token");
+          config.headers.Authorization = basicToken;
+          return config;
+        });
 
-    // if (username === "nareun130" && password === "1234") {
-    //   setAuthenticated(true);
-    //   setUsername(username);
-    //   return true;
-    // } else {
-    //   setAuthenticated(false);
-    //   setUsername(null);
-    //   return false;
-    // }
+        return true;
+      } else {
+        logout();
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      logout();
+      return false;
+    }
   }
   function logout() {
     setAuthenticated(false);
+    setToken(null);
+    setUsername(null);
   }
   //?-> AuthProvider아래 모든 자식 컴포넌트가 childer에 들어간다.
-  return <AuthContext.Provider value={{ isAuthenticated, login, logout, username }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuthenticated, login, logout, username, token }}>{children}</AuthContext.Provider>;
 }

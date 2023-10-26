@@ -26,6 +26,7 @@ public class BasicAuthenticationSecurityConfiguration {
         // * 모든 http요청이 인증되어야 한다는 걸 정의
         http.authorizeRequests(
                 auth -> auth
+                        // 1. 모든 url에 대한 OPTIONS 메서드 허용
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated());
         // * http 기본 인증 설정 -> 팝업
