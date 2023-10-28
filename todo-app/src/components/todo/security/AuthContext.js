@@ -35,8 +35,11 @@ export default function AuthProvider({ children }) {
   //! 인증 작업이 끝나고 나서 set Authenticated를 해주기 위해 async, await을 사용
   //~> login의 handleSubmit도 async를 사용해준다.
   async function login(username, password) {
-    //*Base64로 인코딩된 아스키2 문자열 반환
-    const basicToken = "Basic " + window.btoa(username + ":" + password);
+    //*Base64로 인코딩된 아스키2 문자열 반환 -> 배어러 - 리소스에 대한 소유권 방식이 있다. 대표적인게 jwt, oauth
+    //* Basic authentication은 많이 쓰지 않는다. 보통 1회성 -> 매번 헤더에 담고 가기가 부담스러워서
+
+    const basicToken = "Basic " + window.btoa(username + ":" + password); //* atob는 반대로 디코딩
+
     try {
       const response = await executeBasicAuthenticationService(basicToken);
       if (response.status == 200) {

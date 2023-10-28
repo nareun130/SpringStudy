@@ -26,8 +26,9 @@ export default function TodoComponent() {
         .catch((error) => console.log(error));
     }
   }
+
   //* Form의 value들을 가져온다.
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values);
 
     const todo = {
@@ -37,15 +38,23 @@ export default function TodoComponent() {
       targetDate: values.targetDate,
       done: false,
     };
-    console.log(todo);
+
+    //!? harry
+    // try {
+    //   id === "-1" ? await createTodoApi(username, todo) : await updateTodoApi(username, id, todo)
+    //   navigate("/todos")
+    // } catch (e) {
+    //   console.log(e)
+    // }
+
 
     if (id == -1) {
       createTodoApi(username, todo)
-        .then(navigate("/todos"))
+        .then(() => navigate("/todos"))
         .catch((error) => console.log(error));
     } else {
       updateTodoApi(username, id, todo)
-        .then(navigate("/todos"))
+        .then(() => navigate("/todos"))
         .catch((error) => console.log(error));
     }
   }
