@@ -11,43 +11,49 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RestController
-public class TodoResource {
+import com.nareun.rest.webservices.todo.repository.TodoRepository;
+
+@RestController
+public class TodoJpaResource {
 
     private TodoService todoService;
 
-    public TodoResource(TodoService todoService) {
+    private TodoRepository todoRepository;
+
+    public TodoJpaResource(TodoService todoService, TodoRepository todoRepository) {
         this.todoService = todoService;
+        this.todoRepository = todoRepository;
     }
 
     @GetMapping("/users/{username}/todos")
     public List<Todo> retrieveTodos(@PathVariable String username) {
-        List<Todo> todoList = todoService.findByUsername(username);
-        System.out.println("todoList : " + todoList);
-        return todoList;
+        return todoRepository.findByUsername(username);
     }
 
     @GetMapping("/users/{username}/todos/{id}")
     public Todo retrieveTodo(@PathVariable String username, @PathVariable int id) {
-        return todoService.findById(id);
+        return todoRepository.findById(id).get();
     }
 
     @DeleteMapping("/users/{username}/todos/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable String username, @PathVariable int id) {
-        todoService.deleteById(id);
+        todoRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/users/{username}/todos/{id}")
     public Todo updateTodo(@PathVariable String username, @PathVariable int id,
             @RequestBody Todo todo) {
-        todoService.updateTodo(todo);
+        todoRepository.save(todo); // * insert와 update모두 save()를사용
         return todo;
     }
 
     @PostMapping("/users/{username}/todos")
     public Todo createTodo(@PathVariable String username, @RequestBody Todo todo) {
-        Todo createdTodo = todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), todo.isDone());
-        return createdTodo;
+        // ~> 다른 값들은 todo에 있기때문에 따로 설정하지 않는다.
+        todo.setUsername(username);
+        todo.setId(null);
+        return todoRepository.save(todo);
+
     }
 }

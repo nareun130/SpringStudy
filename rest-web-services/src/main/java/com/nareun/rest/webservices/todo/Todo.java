@@ -2,8 +2,16 @@ package com.nareun.rest.webservices.todo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Todo {
-    private int id;
+    
+    @Id
+    @GeneratedValue
+    private Integer id;
 
     private String username;
 
@@ -15,7 +23,9 @@ public class Todo {
 
     }
 
-    public Todo(int id, String username, String description, LocalDate targetDate, boolean done) {
+    // ! int에는 null을 가질 수 없기 때문에 Wrapper클래스로 전환
+    public Todo(Integer id, String username, String description, LocalDate targetDate, boolean done) {
+        super();    
         this.id = id;
         this.username = username;
         this.description = description;
@@ -23,11 +33,11 @@ public class Todo {
         this.done = done;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

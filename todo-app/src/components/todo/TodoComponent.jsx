@@ -49,11 +49,15 @@ export default function TodoComponent() {
 
     if (id == -1) {
       createTodoApi(username, todo)
-        .then((response) => navigate("/todos"))
+        .then((response) => {
+          navigate("/todos")
+        })
         .catch((error) => console.log(error));
     } else {
       updateTodoApi(username, id, todo)
-        .then((response) => navigate("/todos"))
+        .then((response) => {
+          navigate("/todos")
+        })
         .catch((error) => console.log(error));
     }
   }
