@@ -1,10 +1,10 @@
 package com.nareun.rest.webservices.basic;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -24,7 +24,7 @@ public class BasicAuthenticationSecurityConfiguration {
         // 2. 기본 인증 구현. 로그인 시 헤더를 생성해서 REST
 
         // * 모든 http요청이 인증되어야 한다는 걸 정의
-        http.authorizeRequests(
+        http.authorizeHttpRequests(
                 auth -> auth
                         // 1. 모든 url에 대한 OPTIONS 메서드 허용
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -37,7 +37,7 @@ public class BasicAuthenticationSecurityConfiguration {
         // server의 응답이 client와의 세션 상태와 독립적임
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // ! CSRF를 비활성화 하기 위해서는 세션에 상태가 없어야 한다.
-        http.csrf().disable();
+        http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
 
         // ~> 위의 내용 빌더 패턴으로 생성 가능
