@@ -15,7 +15,7 @@ export default function TodoComponent() {
   const username = authContext.username;
 
   useEffect(() => retrieveTodos(), [id]);
-
+               
   function retrieveTodos() {
     if (id != -1) {
       retrieveTodoApi(username, id)
@@ -47,14 +47,13 @@ export default function TodoComponent() {
     //   console.log(e)
     // }
 
-
     if (id == -1) {
       createTodoApi(username, todo)
-        .then(() => navigate("/todos"))
+        .then((response) => navigate("/todos"))
         .catch((error) => console.log(error));
     } else {
       updateTodoApi(username, id, todo)
-        .then(() => navigate("/todos"))
+        .then((response) => navigate("/todos"))
         .catch((error) => console.log(error));
     }
   }

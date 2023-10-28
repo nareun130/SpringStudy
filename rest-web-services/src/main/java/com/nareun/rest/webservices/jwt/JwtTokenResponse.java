@@ -1,5 +1,5 @@
 package com.nareun.rest.webservices.jwt;
 
-public record JwtTokenResponse(String token) {
+public record JwtTokenResponse(String token) {}
 
-}
+
