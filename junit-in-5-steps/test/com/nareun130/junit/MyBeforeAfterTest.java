@@ -14,6 +14,7 @@ class MyBeforeAfterTest {
 		System.out.println("beforeAll");
 	}
 	
+	
 	@BeforeEach // 모든 테스트 전 실행
 	void beforeEach() {
 		System.out.println("BeforeEach");
