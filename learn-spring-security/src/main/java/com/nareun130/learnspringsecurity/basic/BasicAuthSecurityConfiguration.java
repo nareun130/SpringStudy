@@ -13,11 +13,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+//@Configuration
 public class BasicAuthSecurityConfiguration {
 
 	@Bean
@@ -66,11 +67,16 @@ public class BasicAuthSecurityConfiguration {
 	@Bean
 	public UserDetailsService userDetailsService(DataSource dataSource) {
 		var user = User.withUsername("nareun130")
-				.password("{noop}1234")
+//				.password("{noop}1234")
+				.password("1234")
+				.passwordEncoder(str -> passwordEncoder().encode(str))
 				.roles("USER").build();
 		
 		var admin = User.withUsername("admin")
-				.password("{noop}1234")
+//				.password("{noop}1234")
+				.password("1234")
+				//? password 암호화 설정 
+				.passwordEncoder(str -> passwordEncoder().encode(str))
 				//? 여러 역할지정 가능 
 				.roles("ADMIN","USER").build();
 		
@@ -80,6 +86,12 @@ public class BasicAuthSecurityConfiguration {
 		
 		return jdbcUserDeatilsManager;
 	}
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 
 	
 }
