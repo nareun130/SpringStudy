@@ -38,7 +38,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-@Configuration
+//@Configuration
 public class JwtSecurityConfiguration {
 	/*
 	 * JWT 설정 1. 키 쌍 생성 2. 키 쌍을 이용한 RSA 키 생성 3. JWK(Json Wek Key Source) 생성 4. 디코딩을

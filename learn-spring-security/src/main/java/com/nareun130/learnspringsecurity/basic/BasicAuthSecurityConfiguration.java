@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -17,14 +18,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-//@Configuration
+@Configuration
+@EnableMethodSecurity//2. 메서드 보안 
 public class BasicAuthSecurityConfiguration {
+	
+	//* Spring Security의 보안 2가지 1. 전역, 2. 메서드 
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// HttpSecurity : 특정 HTTP 요청에대해 웹 기반 보안 설정 가능
-		http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+		// ? 1. authorizeHttpRequests :전역 보안 
+		http.authorizeHttpRequests(auth -> auth
+				//users url로 접속하면 USER의 권한을 가져야함. 
+				.requestMatchers(new AntPathRequestMatcher("/users")).hasRole("USER")
+				//admin url로 접속하면 ADMIN의 권한을 가져야함.
+				.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+				.anyRequest().authenticated());
 		// 기본 formLogin사용x
 //		http.formLogin(withDefaults()); 
 
@@ -34,7 +48,7 @@ public class BasicAuthSecurityConfiguration {
 		// * csrf 사용 해제 -> session을 사용하지 않을거기 때문
 		http.csrf(csrf -> csrf.disable());
 		
-		//h2-console은 기본적으로 frame태그를 사용. springSecurit는 이걸 막고 있어서 해제시켜준다.
+		//h2-console은 기본적으로 frame태그를 사용. springSecurit는 이걸 막고 있어서 해제시켜준다. 
 		http.headers(header -> header.frameOptions(options -> options.sameOrigin()));
 		return http.build();
 	}
@@ -63,7 +77,7 @@ public class BasicAuthSecurityConfiguration {
 				.build();
 	}
 	
-	//? dataSource를 사용한 보안 설
+	//? dataSource를 사용한 보안 설정 
 	@Bean
 	public UserDetailsService userDetailsService(DataSource dataSource) {
 		var user = User.withUsername("nareun130")

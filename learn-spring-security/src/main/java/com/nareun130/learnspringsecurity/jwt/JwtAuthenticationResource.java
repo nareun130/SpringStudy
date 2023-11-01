@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
+//@RestController
 public class JwtAuthenticationResource {
 
 	private JwtEncoder jwtEncoder;
