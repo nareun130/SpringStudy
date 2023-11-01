@@ -24,7 +24,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
-@EnableMethodSecurity//2. 메서드 보안 
+@EnableMethodSecurity (jsr250Enabled = true, securedEnabled = true)//2. 메서드 보안 
 public class BasicAuthSecurityConfiguration {
 	
 	//* Spring Security의 보안 2가지 1. 전역, 2. 메서드 
