@@ -2,10 +2,19 @@ package com.nareun130.learnspringsecurity.basic;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -23,6 +32,54 @@ public class BasicAuthSecurityConfiguration {
 		http.httpBasic(withDefaults());
 		// * csrf 사용 해제 -> session을 사용하지 않을거기 때문
 		http.csrf(csrf -> csrf.disable());
+		
+		//h2-console은 기본적으로 frame태그를 사용. springSecurit는 이걸 막고 있어서 해제시켜준다.
+		http.headers(header -> header.frameOptions(options -> options.sameOrigin()));
 		return http.build();
 	}
+
+	//? 인메모리 보안 설정 
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//
+//		var user = User.withUsername("nareun130")
+//				//{noop}은 인코딩 x
+//				.password("{noop}1234")
+//				.roles("USER").build();
+	
+//		var admin = User.withUsername("admin")
+//				.password("{noop}1234")
+//				.roles("ADMIN").build();
+//		return new InMemoryUserDetailsManager(user, admin);
+//	}
+	
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				//dataBase생성 시 실행할 스크립트 설정	
+				.addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
+				.build();
+	}
+	
+	//? dataSource를 사용한 보안 설
+	@Bean
+	public UserDetailsService userDetailsService(DataSource dataSource) {
+		var user = User.withUsername("nareun130")
+				.password("{noop}1234")
+				.roles("USER").build();
+		
+		var admin = User.withUsername("admin")
+				.password("{noop}1234")
+				//? 여러 역할지정 가능 
+				.roles("ADMIN","USER").build();
+		
+		var jdbcUserDeatilsManager = new JdbcUserDetailsManager(dataSource);
+		jdbcUserDeatilsManager.createUser(user);
+		jdbcUserDeatilsManager.createUser(admin);
+		
+		return jdbcUserDeatilsManager;
+	}
+
+	
 }
