@@ -11,11 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Aspect
 @Configuration
 public class PerformanceTrackingAspect {
-
+	
+	private final String TRACKTIME_ANNOTATION_PATH = "com.nareun130.learnspringaop.aop.aspects.CommonPointcutConfig.trackTimeAnnotation()";
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 //	@Around("execution(* com.nareun130.learnspringaop.aop.*.*.*(..))")
-	@Around("com.nareun130.learnspringaop.aop.aspects.CommonPointcutConfig.trackTimeAnnotation()")
+	@Around(value = TRACKTIME_ANNOTATION_PATH)
 	public Object findExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// ? JoinPoint는 메서드를 실행시켜주지 않아서 ProceedingJoinPoint를 쓴다.
 
