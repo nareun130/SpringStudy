@@ -5,20 +5,20 @@ import java.util.Arrays;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.nareun130.learnspringaop.aop.data.DataService1;
+import com.nareun130.learnspringaop.aop.data.DataService2;
 
 @Service
-public class BusinessService1 {
+public class BusinessService2 {
 
-	private DataService1 dataService1;
+	private DataService2 DataService2;
 
-	public BusinessService1(DataService1 dataService1) {
-		this.dataService1 = dataService1;
+	public BusinessService2(DataService2 DataService2) {
+		this.DataService2 = DataService2;
 	}
 
-	public int calculateMax() {
+	public int calculateMin() {
 
-		int[] data = dataService1.retrieveData();
+		int[] data = DataService2.retrieveData();
 
 		try {
 			Thread.sleep(30);
@@ -28,7 +28,7 @@ public class BusinessService1 {
 		}
 
 //		throw new RuntimeException("Something Went Wrong!");
-		return Arrays.stream(data).max().orElse(0);
+		return Arrays.stream(data).min().orElse(0);
 	}
 	// Business Logic
 	// Data
