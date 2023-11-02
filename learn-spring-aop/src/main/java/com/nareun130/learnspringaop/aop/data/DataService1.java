@@ -3,9 +3,12 @@ package com.nareun130.learnspringaop.aop.data;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
+import com.nareun130.learnspringaop.aop.annotations.TrackTime;
 
+@Repository
 public class DataService1 {
+	
+	@TrackTime
 	public int[] retrieveData() {
 		try {
 			Thread.sleep(30);

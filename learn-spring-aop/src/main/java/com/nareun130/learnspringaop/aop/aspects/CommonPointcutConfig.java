@@ -25,4 +25,8 @@ public class CommonPointcutConfig {
 		
 	}
 	
+	@Pointcut("@annotation(com.nareun130.learnspringaop.aop.annotations.TrackTime)")
+	public void trackTimeAnnotation() {
+		
+	}
 }

@@ -14,7 +14,8 @@ public class PerformanceTrackingAspect {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Around("execution(* com.nareun130.learnspringaop.aop.*.*.*(..))")
+//	@Around("execution(* com.nareun130.learnspringaop.aop.*.*.*(..))")
+	@Around("com.nareun130.learnspringaop.aop.aspects.CommonPointcutConfig.trackTimeAnnotation()")
 	public Object findExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// ? JoinPoint는 메서드를 실행시켜주지 않아서 ProceedingJoinPoint를 쓴다.
 
@@ -29,7 +30,7 @@ public class PerformanceTrackingAspect {
 
 		long executionDuration = stopTimeMillis - startTimeMillis;
 
-		logger.info("@Around Aspect - {} Method excecuted in {}ms", proceedingJoinPoint, executionDuration);
+		logger.info("Around Aspect - {} Method excecuted in {}ms", proceedingJoinPoint, executionDuration);
 
 		return returnValue;
 	}
