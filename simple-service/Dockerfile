@@ -1,6 +1,10 @@
+# ! 모든 빌드 프로세스를 docker에서 
+FROM gradle:8.4.0-jdk AS build
+WORKDIR /home/app
+COPY . /home/app/
+RUN gradle clean build --no-daemon
+
 FROM openjdk:18.0-slim
-# maven은 target
-# * gradle은 run Configuration에서 bootJar설정해서 Run 해주고 경로를 다르게 해줘야 한다.
-COPY build/libs/*.jar app.jar
 EXPOSE 5000
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY --from=build /home/app/build/libs/*.jar app.jar
+ENTRYPOINT [ "sh" , "-c", "java -jar /app.jar"]

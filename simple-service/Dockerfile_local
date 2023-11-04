@@ -1,0 +1,9 @@
+FROM openjdk:18.0-slim
+# maven은 target
+# * gradle은 run Configuration에서 bootJar설정해서 Run 해주고 경로를 다르게 해줘야 한다.
+COPY build/libs/*.jar app.jar
+EXPOSE 5000
+ENTRYPOINT ["java","-jar","/app.jar"]
+# ! 로컬에서 빌드를 하여 도커 이미지 생성하는 것은 좋은 방법이 아님!
+# ! 다른 머신에서는 돌아가지 않을 수 있따.
+# ! 즉 모든 빌드 프로세스를 docker안에서 실행시켜야 한다.
