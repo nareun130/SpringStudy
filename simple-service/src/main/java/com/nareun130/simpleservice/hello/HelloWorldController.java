@@ -8,6 +8,6 @@ public class HelloWorldController {
 
 	@GetMapping("/")
 	public String helloWorld() {
-		return "{\"message\":\"Hello World Docker!!!\"}";
+		return "{\"message\":\"Hello World!! : v4 \"}";
 	}
 }
