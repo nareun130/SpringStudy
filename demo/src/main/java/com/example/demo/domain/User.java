@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.example.demo.dto.UserRequestDto;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +50,11 @@ public class User extends BaseTime {
 		this.contact = contact;
 		this.username = username;
 		this.password = password;
+	}
+
+	public void update(UserRequestDto requestDto) {
+		this.role = requestDto.getRole();
+		
 	}
 
 }

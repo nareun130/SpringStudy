@@ -12,14 +12,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthResponseDTO {
+public class AuthResponseDto {
 	private String tokenType;
 	private String accessToken;
 	private String refreshToken;
 
 	//* 인증 요청에 대해 User정보와 함께 Token 정보를 응답으로 반환 
 	@Builder
-	public AuthResponseDTO(Auth entity) {
+	public AuthResponseDto(Auth entity) {
 		this.tokenType = entity.getTokenType();
 		this.accessToken = entity.getAccessToken();
 		this.refreshToken = entity.getRefreshToken();

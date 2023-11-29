@@ -3,6 +3,7 @@ package com.example.demo.config;
 import java.io.IOException;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -30,9 +31,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		}
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthenticationFromToken(String accessToken) {
-		// TODO Auto-generated method stub
-		return null;
+	private UsernamePasswordAuthenticationToken getAuthenticationFromToken(String token) {
+		Long userId = jwtTokenProvider.getUserIdFromToken(token);
+		UserDetails userDetails = customUserDetailsService.loadUserByUserId(userId);
+		return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	}
 
 	private String getTokenFromRequest(HttpServletRequest request) {
