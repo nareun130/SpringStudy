@@ -8,11 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
+@Setter 
 @Entity
 public class Auth extends BaseTime {
 
@@ -33,6 +36,7 @@ public class Auth extends BaseTime {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Builder
 	public Auth(User user, String tokenType, String accessToken, String refreshToken) {
 		this.user = user;
 		this.tokenType = tokenType;
