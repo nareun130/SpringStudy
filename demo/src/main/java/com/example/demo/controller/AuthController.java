@@ -30,6 +30,7 @@ public class AuthController {
 	// 회원가입 API
 	@PostMapping("/api/v1/auth/signup")
 	public ResponseEntity<?> signUp(@RequestBody UserRequestDto requestDto) {
+		System.out.println("들어온 request : " + requestDto);
 		this.authService.signup(requestDto);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}

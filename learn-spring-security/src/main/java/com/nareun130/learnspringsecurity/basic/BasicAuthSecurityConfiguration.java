@@ -38,7 +38,8 @@ public class BasicAuthSecurityConfiguration {
 				.requestMatchers(new AntPathRequestMatcher("/users")).hasRole("USER")
 				//admin url로 접속하면 ADMIN의 권한을 가져야함.
 				.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-				.anyRequest().authenticated());
+				.anyRequest()
+				.authenticated());
 		// 기본 formLogin사용x
 //		http.formLogin(withDefaults()); 
 
@@ -70,6 +71,7 @@ public class BasicAuthSecurityConfiguration {
 	
 	@Bean
 	public DataSource dataSource() {
+		
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				//dataBase생성 시 실행할 스크립트 설정	
