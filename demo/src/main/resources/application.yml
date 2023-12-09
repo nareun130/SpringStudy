@@ -13,6 +13,6 @@ spring:
       show-sql: true
       
 jwt:
-  secret: nareun130
+  secret: nareun130skfmsgorlajtdghskfmsgorlatjdghdfklasdjladsfflkasdfjkhkjqehrkjlqwhelrkjqhweiruhwiufjckvklkj
   accessTokenExpirationTime: 360000
   refreshTokenExpirationTime: 86400000
