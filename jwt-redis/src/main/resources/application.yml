@@ -1,0 +1,23 @@
+server:
+  port: 9000
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+# 해당 설정이 true라면 @Entity 객체를 근거로 서버 시작 시점에 DDL 문을 생성하여 DB에 적용한다.
+    generate-ddl: false
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+   
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql//127.0.0.1:3306/test?autoReconnect=true
+    username: root
+    password: Tjdgh@130
+  data:
+    redis:
+      host: localhost
+      port: 6379
+jwt:
+ secret: skfmsgksrlatjdghdmltlzmfltzldlqslek
