@@ -1,0 +1,14 @@
+package com.example.todo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+//Spring MVC
+@Controller
+public class HelloController {
+    @GetMapping("/hello")
+    public String hello(){
+        
+        return "hello"; // hello템플릿을 사용하겠다.
+    }
+}

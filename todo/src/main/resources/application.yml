@@ -1,0 +1,12 @@
+# Spring Data Source 설정 - MYSQL
+spring:
+    datasource:
+        url:   jdbc:mysql://127.0.0.1:3306/example?useSSL=false&allowPublickeyRetrieval=true&serverTimezone=Asia/Seoul
+        username:   nareun130
+        password:   u1234
+        driver-class-name:  com.mysql.cj.jdbc.Driver
+    devtools:
+        livereload:
+            enabled:    true
+        restart:
+            enabled:    true
