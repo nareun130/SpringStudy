@@ -52,3 +52,17 @@ defaultSchema:  example
 username:   nareun130
 password:   u1234
 ```
+
+---
+## SpringDataJPA 설정
+```
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                show_sql: true
+                format_sql: true
+        database-platform: org.hibernate.spatial.dialect.myql.MySQL8InnoDBSpatialDialect
+```
