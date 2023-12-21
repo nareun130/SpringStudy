@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 동일한 인스턴스를 다른 아이디로 만들 수 있다. -->
+    <bean id="book1" class="exam.Book"></bean>
+    <bean id="book2" class="exam.Book"></bean>
+    <!-- ? 1. bean을 따로 생성해서 개발자가 setter로 직접 주입 -->
+    <!-- <bean id="myService" class="spring.component.MyService"></bean>
+    <bean id="myDao" class="spring.component.MyDao"></bean> -->
+
+    <!-- ? 2. 자동으로 bean애서 프로퍼티로 주입 -->
+    <bean id="myService" class="spring.component.MyService">
+        <!-- name : setMyDao ref: 밑의 myDao bean -->
+        <property name="myDao" ref="myDao"></property>
+    </bean>
+    <bean id="myDao" class="spring.component.MyDao"></bean>
+
+
+
+</beans>
