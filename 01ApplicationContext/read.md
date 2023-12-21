@@ -33,3 +33,6 @@ Spring 설정으로 인한 주입
     </bean>
     <bean id="myDao" class="spring.component.MyDao"></bean>
 ~~~
+
+# Annontation을 이용한 Container
+xml의 불편함 -> annotation을 이용한 컨테이너방식 등장

@@ -6,7 +6,10 @@
 
     <!-- 동일한 인스턴스를 다른 아이디로 만들 수 있다. -->
     <bean id="book1" class="exam.Book"></bean>
-    <bean id="book2" class="exam.Book"></bean>
+    <bean id="book2" class="exam.Book">
+        <property name="title" value="즐거운 자바"></property>
+        <property name="price" value="5000"></property>
+    </bean>
     <!-- ? 1. bean을 따로 생성해서 개발자가 setter로 직접 주입 -->
     <!-- <bean id="myService" class="spring.component.MyService"></bean>
     <bean id="myDao" class="spring.component.MyDao"></bean> -->
@@ -17,7 +20,5 @@
         <property name="myDao" ref="myDao"></property>
     </bean>
     <bean id="myDao" class="spring.component.MyDao"></bean>
-
-
 
 </beans>
