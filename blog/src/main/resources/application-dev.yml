@@ -1,0 +1,18 @@
+spring:
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/test
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: Tjdgh@130
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        properties:
+            show-sql: true
+            foramt-sql: true
+        # 시작과 종료에서 모두 drop
+        hibernate:
+            ddl-auto: create-drop
+
+    devtools:
+        livereload:
+            enabled: true

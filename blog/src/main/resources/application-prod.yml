@@ -1,0 +1,15 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/test
+        driver-class-name: org.postgresql.Driver
+        username: manager130    
+        password: Tjdgh@130
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        properties:
+            hibernate:
+                show-sql: true
+                foramt-sql: true
+        # 시작과 종료에서 모두 drop
+        hibernate:
+            ddl-auto: create-drop
