@@ -26,9 +26,19 @@ spring:
 mybatis:
     # classpath는 기본적으로 resources 폴더 생각!
     mapper-locations: classpath:mybatis/mapper/h2/**/**.xml
+    # db의 uuid를 java의 uuid로 바꿔줄 수 있는 클래스 패키지명 설정 -> 고급
     type-handlers-package: com.nareun.blog.mapper.typehandler
+    # select문의 com.nareun.blog.model.Post 풀 패키지명 대신
+    # Post이렇게만 쓰고 싶을 때 패키지 설정
     type-aliases-package: com.nareun.blog.mapper.model
     configuration:
+        # camelType -> under_score로 바꿔줌
         map-underscore-to-camel-case: true
+        # 쿼리 처리 시간이 30초 이상이면 커넥션 해제
         default-statement-timeout: 30
+        # 한번에 최대로 들고 올수 있는 검색 사이즈
         default-fetch-size: 100
+logging:
+    level:
+        root: INFO
+        com.nareun.blog.mapper: TRACE
