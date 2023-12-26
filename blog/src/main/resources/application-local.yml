@@ -12,13 +12,11 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.H2Dialect
         properties:
-            dialect: org.hibernate.dialect.H2Dialect
             show-sql: true
-            foramt-sql: true
+            format-sql: true
         # 시작과 종료에서 모두 drop
         hibernate:
             ddl-auto: create-drop
-
     devtools:
         livereload:
             enabled: true
@@ -38,7 +36,8 @@ mybatis:
         default-statement-timeout: 30
         # 한번에 최대로 들고 올수 있는 검색 사이즈
         default-fetch-size: 100
+# 로깅 설정
 logging:
     level:
-        root: INFO
-        com.nareun.blog.mapper: TRACE
+        root: DEBUG # 콘솔에 SQL 출력하려면 DEBUG여야 나온다
+        '[com.nareun.blog.mapper]':  TRACE # 파라미터 값 출력

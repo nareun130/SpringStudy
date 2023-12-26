@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nareun.blog.mapper.PostMapper">
+    <select id="listPost" resultType="com.nareun.blog.model.Post">
+        select
+        <!-- Mysql함수 BIN_To_UUID :binary -> uuid 
+            aias안 정해주면 null로 들어감-->
+            BIN_To_UUID(post_id) as post_id,
+            title,
+            contents,
+            author,
+            created_date_time
+        from post
+    </select>
+</mapper>

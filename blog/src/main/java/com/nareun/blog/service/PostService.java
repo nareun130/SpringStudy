@@ -16,9 +16,13 @@ public class PostService {
 	
     private final PostRepository postRepository;
     private final PostMapper postMapper;
-    public List<Post> postList() {
+    public List<Post> postList(String title) {
         //  return postRepository.findAll();
-        return postMapper.listPost();
         //! Jpa와 mybatis를 섞어 쓸 수는 있지만 트랜잭션 생각해야함. -> 고급과정 
+        // return postMapper.listPost();
+        // return postRepository.findByTitle(title);
+        return postRepository.findByTitleContains(title);
+
+        
     }
 }

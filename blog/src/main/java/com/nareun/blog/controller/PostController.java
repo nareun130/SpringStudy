@@ -17,19 +17,19 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/posts")
-@RequiredArgsConstructor //? lombok쓰면 생성자 방식 없이 이렇게 적용 가능
+@RequiredArgsConstructor // ? lombok쓰면 생성자 방식 없이 이렇게 적용 가능
 public class PostController {
 
     private final PostService postService;
 
-    
     // public PostController(PostService postService) {
-    //     this.postService = postService;
+    // this.postService = postService;
     // }
 
     @GetMapping("/list")
-    public List<Post> postLists() {
-        return postService.postList();
+    public List<Post> postList(@RequestParam(value = "title") String title) {
+        // value 안 달아주면 에러 발생 
+        return postService.postList(title);
     }
 
     @GetMapping("/{postId}")

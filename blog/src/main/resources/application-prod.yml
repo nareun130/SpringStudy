@@ -9,7 +9,7 @@ spring:
         properties:
             hibernate:
                 show-sql: true
-                foramt-sql: true
+                format-sql: true
         # 시작과 종료에서 모두 drop
         hibernate:
             ddl-auto: create-drop

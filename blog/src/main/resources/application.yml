@@ -1,5 +1,8 @@
 # 활성화 할 프로파일 설정
 spring:
-  profiles:
-    active: local # local, prod, dev
-    
+    profiles:
+        active: dev # local, prod, dev
+
+jasypt:
+    encryptor:
+        bean: jasyptStringEncryptor

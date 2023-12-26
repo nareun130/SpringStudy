@@ -1,3 +1,5 @@
+server:
+    port: 8080
 spring:
     datasource:
         url: jdbc:mysql://127.0.0.1:3306/test
@@ -8,7 +10,7 @@ spring:
         database-platform: org.hibernate.dialect.MySQL8Dialect
         properties:
             show-sql: true
-            foramt-sql: true
+            format-sql: true
         # 시작과 종료에서 모두 drop
         hibernate:
             ddl-auto: create-drop
@@ -16,3 +18,16 @@ spring:
     devtools:
         livereload:
             enabled: true
+mybatis:
+    mapper-locations: classpath:mybatis/mapper/mysql/**/**.xml
+    type-handlers-package: com.nareun.blog.mapper.typehandler
+    type-aliases-package: com.nareun.blog.mapper.model
+    configuration:
+        map-underscore-to-camel-case: true
+        default-statement-timeout: 30
+        default-fetch-size: 100
+# 로깅 설정
+logging:
+    level:
+        root: INFO
+        '[com.nareun.blog.mapper]': TRACE
